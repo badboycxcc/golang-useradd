@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "flag"
     "syscall"
     "unsafe"
     "os"
@@ -246,13 +247,23 @@ func localGroupModMembers(proc *syscall.LazyProc, groupname string, usernames []
 
 
 func main(){
-    username := "testtest"
-    password := "abc.123"
-    fullname := ""
-    groupname := "administrators"
-    groupuser := []string{"testtest"}
-    UserAdd(username, fullname, password)
-    LocalGroupAddMembers(groupname,groupuser)
+    // 用户
+	var username string
+	// 密码
+	var password string
+	// 管理组
+	var groupname string
 
-    //users, err := wapi.ListLocalUsers()
+	flag.StringVar(&username, "u", "admin123", "用户名,默认 admin123")
+	flag.StringVar(&password, "p", "admin123", "密码,默认 admin123")
+	flag.StringVar(&groupname, "g", "administrators", "用户组,默认 administrators")
+	flag.Parse()
+
+	fullname := ""
+	groupuser := []string{username}
+	wapi.UserAdd(username, fullname, password)
+	wapi.LocalGroupAddMembers(groupname, groupuser)
+
+	// 打印
+	fmt.Printf("Add User username=%v password=%v group=%v\n", username, password, groupname)
 }

@@ -1,6 +1,9 @@
 # golang-useradd
 golang windows api useradd
 
+# 增加命令行操作功能。  
+
+
 
 useradd.go 直接调用golang第三方windows api库
 useradd1.go 将第三方库里代码提取出来的
